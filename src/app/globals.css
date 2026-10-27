@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --ink-950: 245 241 232;
+  --ink-900: 251 249 244;
+  --ink-800: 238 232 218;
+  --ink-700: 220 212 194;
+  --ink-600: 195 185 163;
+  --ink-400: 107 100 87;
+  --ink-200: 58 53 43;
+  --ink-100: 42 38 30;
+  --ink-50: 22 19 14;
+  --accent-500: 180 69 31;
+  --accent-400: 146 55 22;
+  --good: 31 122 79;
+  --warn: 154 106 18;
+  --bad: 179 54 47;
+}
+
+.dark {
+  color-scheme: dark;
+  --ink-950: 20 17 13;
+  --ink-900: 27 24 20;
+  --ink-800: 37 33 27;
+  --ink-700: 56 50 42;
+  --ink-600: 81 73 61;
+  --ink-400: 160 151 138;
+  --ink-200: 217 210 196;
+  --ink-100: 236 230 217;
+  --ink-50: 247 243 234;
+  --accent-500: 217 88 47;
+  --accent-400: 240 138 99;
+  --good: 76 195 138;
+  --warn: 224 166 60;
+  --bad: 239 107 99;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ink-950 font-sans text-ink-200 antialiased;
+  font-feature-settings: "ss01", "cv11";
+}
+
+::selection {
+  @apply bg-accent-500 text-white;
+}
+
+:focus-visible {
+  @apply outline-none ring-2 ring-accent-500 ring-offset-2 ring-offset-ink-950;
+}
+
+h1,
+h2,
+h3 {
+  @apply text-ink-50;
+}
+
+/* Editorial building blocks ------------------------------------------- */
+
+.display {
+  @apply font-display font-medium tracking-tight text-ink-50;
+  font-variation-settings: "opsz" 72;
+}
+
+.eyebrow {
+  @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-accent-500;
+}
+
+.rule {
+  @apply border-t border-ink-700;
+}
+
+.card {
+  @apply rounded-md border border-ink-700 bg-ink-900 p-5 transition-colors sm:p-6;
+}
+
+.card h2 {
+  @apply font-display text-lg font-medium tracking-tight text-ink-50;
+}
+
+.badge {
+  @apply inline-flex items-center rounded-full border border-ink-700 bg-ink-800 px-2.5 py-0.5 text-xs font-medium text-ink-200;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-all disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.btn-primary {
+  @apply btn bg-ink-50 text-ink-950 hover:bg-accent-500 hover:text-white active:scale-[0.98];
+}
+
+.btn-secondary {
+  @apply btn border border-ink-600 bg-transparent text-ink-50 hover:border-ink-50 hover:bg-ink-800 active:scale-[0.98];
+}
+
+.btn-ghost {
+  @apply btn text-ink-200 hover:bg-ink-800 active:scale-[0.98];
+}
+
+.input {
+  @apply w-full rounded-md border border-ink-600 bg-ink-900 px-3 py-2 text-sm text-ink-50 placeholder:text-ink-400 transition-colors focus:border-ink-50 focus:outline-none focus:ring-0;
+}
+
+.label {
+  @apply mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-400;
+}

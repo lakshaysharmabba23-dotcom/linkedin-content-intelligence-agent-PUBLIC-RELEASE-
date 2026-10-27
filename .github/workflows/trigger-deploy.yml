@@ -1,0 +1,40 @@
+name: Deploy Trigger.dev tasks
+
+# Uploads src/trigger/*.ts to Trigger.dev's servers whenever the pipeline's
+# background job code changes on main - the cloud equivalent of running
+# `npx trigger.dev@latest deploy` from a local machine. Requires a
+# TRIGGER_ACCESS_TOKEN repository secret (Trigger.dev dashboard -> your
+# account -> Personal Access Tokens; NOT the same as the app's runtime
+# TRIGGER_SECRET_KEY). Also runnable manually from the Actions tab.
+on:
+  push:
+    branches: [main]
+    paths:
+      # The background job imports code from all of src/, so any change
+      # there must redeploy it - otherwise it keeps running old code.
+      - "src/**"
+      - "trigger.config.ts"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/trigger-deploy.yml"
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: Deploy to Trigger.dev
+        # Pinned to match the installed @trigger.dev/sdk version in
+        # package.json - the CLI refuses to deploy in CI if its version
+        # doesn't match the project's installed packages ("Version mismatch
+        # detected while running in CI"), and Trigger.dev's backend no
+        # longer accepts deploys from v3 CLIs at all. Bump both together if
+        # you ever upgrade @trigger.dev/sdk.
+        env:
+          TRIGGER_ACCESS_TOKEN: ${{ secrets.TRIGGER_ACCESS_TOKEN }}
+        run: npx trigger.dev@4.6.4 deploy
